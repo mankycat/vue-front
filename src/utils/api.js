@@ -1,4 +1,6 @@
 import axios from 'axios'
+import router from '../router'
+import store from '../store'
 import {Message} from 'element-ui'
 
 axios.interceptors.request.use(config => {
@@ -10,6 +12,10 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(data => {
   if (data.status && data.status === 200 && data.data.status === 'error') {
     Message.error({message: data.data.msg})
+    if (data.data.msg === '超时!请重新登陆!' || '找不到该用户') {
+      store.commit('logout')
+      router.replace({name: 'Login'})
+    }
     return
   }
   return data

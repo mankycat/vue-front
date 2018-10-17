@@ -24,20 +24,26 @@
         style="width: 100%">
         <el-table-column
           prop="username"
-          label="用户名"
-          width="120">
+          min-width="65"
+          label="用户名">
         </el-table-column>
         <el-table-column
           prop="nickname"
-          label="昵称"
-          width="120">
+          min-width="65"
+          label="昵称">
+        </el-table-column>
+        <el-table-column
+          prop="courseName"
+          min-width="45"
+          label="垒包">
         </el-table-column>
         <el-table-column
           fixed="right"
+          min-width="80"
           label="操作">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row , false)" type="info" size="small">查看</el-button>
-            <el-button @click="handleClick(scope.row , true)" type="danger" size="small">编辑</el-button>
+            <el-button style="margin: 0px" @click="handleClick(scope.row , true)" type="danger" size="small">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -55,6 +61,8 @@ export default {
             phone: row.phone,
             username: row.username,
             isEdit: isEdit,
+            courseName: row.courseName,
+            gender: row.gender,
             date: row.joinchurchdate,
             userid: row.userid,
             isNew: false
@@ -81,6 +89,7 @@ export default {
           gId: this.cTeam
         }).then(resp => {
         if (resp && resp.status === 200 && resp.data.status === 'success') {
+          console.log('.....123')
           this.$store.commit('initMemberList', resp.data.data)
         }
       })

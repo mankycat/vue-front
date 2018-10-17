@@ -59,8 +59,8 @@ export default {
     border-radius: 15px;
     background-clip: padding-box;
     margin: 180px auto;
-    width: 350px;
     padding: 35px 35px 15px 35px;
+    max-width: 350px;
     background: #fff;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
@@ -72,8 +72,4 @@ export default {
     color: #505458;
   }
 
-  .login_remember {
-    margin: 0px 0px 35px 0px;
-    text-align: left;
-  }
 </style>
