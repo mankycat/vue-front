@@ -32,6 +32,13 @@ export default {
   },
   methods: {
     submitClick: function () {
+      var convert = require('xml-to-json-promise')
+      var datas = '<?xml version="1.0" encoding="utf-8"?>\n' +
+        '<string xmlns="http://tempuri.org/">[{"UserID":"LC2015120004","UserName":"陆人贤","LoginName":"13331932927","PassWord":null,"Phone":"13331932927","OrganizationID":"7d70294a-ca34-410d-82cc-f8b7e07f5a11","OrganizationName":"长青组","ParentOrgnizationName":"大卫区","ParentOrgnizationID":"63f9f004-c737-475e-a365-65efd688543d","GrandFatherName":"福鹰","GrandFatherID":"e3656461-4dbf-45da-a4f5-cf9bd1b64aef","RoleName":"组长","OtherRoleName":null,"RoleType":null}]</string>'
+      convert.xmlDataToJSON(datas).then(json => {
+        console.log(JSON.parse(json.string._)[0])
+      })
+      // http://192.168.1.102:8080/WebServiceBasic.asmx/GetLoginInfo
       var _this = this
       this.loading = true
       this.postRequest('/login', {
@@ -41,6 +48,7 @@ export default {
         _this.loading = false
         if (resp && resp.status === 200) {
           var data = resp.data
+          console.log(data.msg)
           _this.$store.commit('login', data.msg)
           _this.$router.replace({path: '/'})
         } else {

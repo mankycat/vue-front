@@ -4,7 +4,11 @@
     <el-menu style="height: 100%" default-active="/memberlist" router unique-opened class="el-menu-vertical" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
       <el-menu-item @click="handleCollapse" index="/memberlist">查看/编辑组员信息</el-menu-item>
       <el-menu-item @click="handleCollapse" index="/updatepwd">更改密码</el-menu-item>
-      <el-menu-item @click="handleCollapse" index="/" >报表(待..)</el-menu-item>
+      <el-submenu @click="handleCollapse" >
+        <template slot="title">报表</template>
+        <el-menu-item index="/reportlist">填写周报</el-menu-item>
+        <el-menu-item index="/reportlistmod">修改周报</el-menu-item>
+      </el-submenu>
       <el-menu-item @click="logOut" index="/">退出</el-menu-item>
     </el-menu>
   </el-aside>
