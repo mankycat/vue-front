@@ -95,7 +95,7 @@ export default {
       this.$router.back()
     },
     submitChange: function () {
-      var _this = this
+      let _this = this
       if (this.isNew) {
         this.$refs['ruleForm'].validate((valid) => {
           if (valid) {

@@ -175,8 +175,8 @@ export default {
       isEdit: true,
       step: 0,
       stepStatus: 0, // 0 = 組員 , 1 = 活動 , 2 = 5week
-      attendanceObj: {},
-      FiveWObj: {},
+      attendanceObj: [],
+      FiveWObj: [],
       WeekRptObj: {},
       ruleForm: {
         isGroup: 0,
@@ -233,7 +233,14 @@ export default {
   },
   methods: {
     leave () {
-
+      let _this = this
+      this.$confirm('作废操作?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        _this.$router.back()
+      })
     },
     preStep () {
       this.step--
@@ -242,15 +249,39 @@ export default {
       } else {
         this.stepStatus--
       }
-      console.log(this.currentMember)
+      if (this.step <= (this.memberData.length - 1) && this.step >= 0) {
+        this.ruleForm.isGroup = this.attendanceObj[this.step].IsGroup
+        this.ruleForm.isChurch = this.attendanceObj[this.step].IsChurch
+        this.ruleForm.isLD = this.attendanceObj[this.step].IsLD
+        this.ruleForm.isCourse = this.attendanceObj[this.step].IsCourse
+        this.ruleForm.isTD = this.attendanceObj[this.step].isTD
+        this.ruleForm.spiritualGrowth = this.attendanceObj[this.step].SpiritualGrowth
+        this.ruleForm.phoneCare = this.attendanceObj[this.step].PhoneCare
+        this.ruleForm.byVisiting = this.attendanceObj[this.step].ByVisiting
+      }
     },
     nextStep () {
+      if (this.step < (this.memberData.length - 1)) {
+        let attendanceData = {}
+        attendanceData.ID = null
+        attendanceData.UserID = this.currentMember.userid
+        attendanceData.IsGroup = this.ruleForm.isGroup
+        attendanceData.IsChurch = this.ruleForm.isChurch
+        attendanceData.IsLD = this.ruleForm.isLD
+        attendanceData.IsCourse = this.ruleForm.isCourse
+        attendanceData.isTD = this.ruleForm.isTD
+        attendanceData.SpiritualGrowth = this.ruleForm.spiritualGrowth
+        attendanceData.PhoneCare = this.ruleForm.phoneCare
+        attendanceData.ByVisiting = this.ruleForm.byVisiting
+        this.attendanceObj[this.step] = attendanceData
+      }
       this.step++
       if (this.step > (this.memberData.length - 1)) {
         this.stepStatus++
       } else {
         this.currentMember = this.memberData[this.step]
       }
+      this.resetFormMemberValue()
     },
     submitReport () {
       console.log('')
@@ -262,6 +293,16 @@ export default {
       nowHour = nowHour < 10 ? '0' + nowHour : nowHour
       nowMin = nowMin < 10 ? '0' + nowMin : nowMin
       return nowHour + ':' + nowMin
+    },
+    resetFormMemberValue () {
+      this.ruleForm.isGroup = 0
+      this.ruleForm.isChurch = 0
+      this.ruleForm.isLD = 0
+      this.ruleForm.isCourse = 0
+      this.ruleForm.isTD = 0
+      this.ruleForm.spiritualGrowth = 0
+      this.ruleForm.phoneCare = 0
+      this.ruleForm.byVisiting = 0
     }
   },
   computed: {
@@ -270,7 +311,6 @@ export default {
     }
   },
   mounted: function () {
-    console.log(this.memberData)
     this.currentMember = this.memberData[0]
   }
 }
