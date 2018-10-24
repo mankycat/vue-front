@@ -17,7 +17,7 @@
           <div style="height: 100%" @click="checkCollapse">
             <router-view></router-view>
           </div>
-        <el-footer>Copyright ©2018 v1.0.0</el-footer>
+        <!--<el-footer>Copyright ©2018 v1.0.0</el-footer>-->
     </el-container>
   </el-container>
 </template>
