@@ -1,8 +1,9 @@
 <template>
   <el-container>
     <el-main style="padding: 10px">
-      <span>{{username}}</span><span v-if="alias"> ({{alias}})</span><span>活动纪录</span>
+      <div v-if="stepStatus===0"><span>{{currentMember.username}}</span><span v-if="currentMember.nickname"> ({{currentMember.nickname}})</span><span>活动纪录</span></div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
+        <div v-if="stepStatus===0">
         <el-form-item label="小組" prop="isGroup">
           <!--<el-input v-if="isEdit" v-model="ruleForm.loginname"></el-input>-->
           <!--<div v-else style="text-align: left"><span>:   {{ruleForm.loginname}}</span></div>-->
@@ -39,6 +40,8 @@
         <el-form-item label="探访" prop="byVisiting">
           <el-input-number v-model="ruleForm.byVisiting"></el-input-number>
         </el-form-item>
+      </div>
+        <div v-if="stepStatus===1">
         <el-form-item label="主日正常" prop="isSunday">
           <el-switch v-model="ruleForm.isSunday"></el-switch>
         </el-form-item>
@@ -71,6 +74,8 @@
         <el-form-item v-if="ruleForm.description" prop="contentDetails" label="备注说明">
           <el-input v-model="ruleForm.description" placeholder="请输入内容"></el-input>
         </el-form-item>
+        </div>
+        <div v-if="stepStatus===2">
         <el-form-item label="开始时间" prop="beginTime">
           <el-time-select editable="false" clearable="false" v-model="ruleForm.beginTime" default-value="ruleForm.beginTime" :picker-options="{start: ruleForm.beginTime , step: '00:05'}"></el-time-select>
         </el-form-item>
@@ -151,9 +156,11 @@
           </el-select>
           <el-time-select style="width: 35%;" editable="false" clearable="false" v-model="ruleForm.reportTime" default-value="ruleForm.reportTime" :picker-options="{start: ruleForm.reportTime , step: '00:05'}"></el-time-select>
         </el-form-item>
-        <el-button @click.native.prevent="">返回</el-button>
-        <el-button @click.native.prevent="">下一步</el-button>
-        <el-button type="primary" @click.native.prevent="" >提交</el-button>
+        </div>
+        <el-button v-if="step===0 && stepStatus===0" @click.native.prevent="leave">返回</el-button>
+        <el-button v-if="step>0" @click.native.prevent="preStep">上一步</el-button>
+        <el-button v-if="stepStatus<2" @click.native.prevent="nextStep">下一步</el-button>
+        <el-button v-if="stepStatus === 2" type="primary" @click.native.prevent="submitReport" >提交</el-button>
       </el-form>
     </el-main>
   </el-container>
@@ -164,9 +171,10 @@ export default {
   name: 'ReportInfo',
   data () {
     return {
-      username: '誰誰誰',
-      alias: '',
+      currentMember: '',
       isEdit: true,
+      step: 0,
+      stepStatus: 0, // 0 = 組員 , 1 = 活動 , 2 = 5week
       attendanceObj: {},
       FiveWObj: {},
       WeekRptObj: {},
@@ -224,11 +232,25 @@ export default {
     }
   },
   methods: {
+    leave () {
+
+    },
     preStep () {
-      console.log('')
+      this.step--
+      if (this.step < (this.memberData.length - 1)) {
+        this.currentMember = this.memberData[this.step]
+      } else {
+        this.stepStatus--
+      }
+      console.log(this.currentMember)
     },
     nextStep () {
-      console.log('')
+      this.step++
+      if (this.step > (this.memberData.length - 1)) {
+        this.stepStatus++
+      } else {
+        this.currentMember = this.memberData[this.step]
+      }
     },
     submitReport () {
       console.log('')
@@ -246,6 +268,10 @@ export default {
     memberData () {
       return this.$store.state.members
     }
+  },
+  mounted: function () {
+    console.log(this.memberData)
+    this.currentMember = this.memberData[0]
   }
 }
 </script>
