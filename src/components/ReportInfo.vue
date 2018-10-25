@@ -7,19 +7,19 @@
         <el-form-item label="小組" prop="isGroup">
           <!--<el-input v-if="isEdit" v-model="ruleForm.loginname"></el-input>-->
           <!--<div v-else style="text-align: left"><span>:   {{ruleForm.loginname}}</span></div>-->
-          <el-switch v-model="ruleForm.isGroup"></el-switch>
+          <el-switch width=60 v-model="ruleForm.isGroup"></el-switch>
         </el-form-item>
         <el-form-item label="主日" prop="isChurch">
-          <el-switch v-model="ruleForm.isChurch"></el-switch>
+          <el-switch width=60 v-model="ruleForm.isChurch"></el-switch>
         </el-form-item>
         <el-form-item label="LD" prop="isLD">
-          <el-switch v-model="ruleForm.isLD"></el-switch>
+          <el-switch width=60 v-model="ruleForm.isLD"></el-switch>
         </el-form-item>
         <!--<el-form-item v-if="isNew == false" label="垒包" prop="coursename">-->
           <!--<div style="text-align: left"><span>:   {{ruleForm.coursename}}</span></div>-->
         <!--</el-form-item>-->
         <el-form-item  label="垒包" prop="isCourse">
-          <el-switch v-model="ruleForm.isCourse"></el-switch>
+          <el-switch width=60 v-model="ruleForm.isCourse"></el-switch>
           <!--<div style="text-align: left;">-->
             <!--<el-radio-group  v-if="isEdit" v-model="ruleForm.gender">-->
               <!--<el-radio label="男"></el-radio>-->
@@ -29,7 +29,7 @@
           <!--</div>-->
         </el-form-item>
         <el-form-item label="TD" prop="isTD">
-          <el-switch v-model="ruleForm.isTD"></el-switch>
+          <el-switch width=60 v-model="ruleForm.isTD"></el-switch>
         </el-form-item>
         <el-form-item label="灵修次数" prop="spiritualGrowth">
           <el-input-number v-model="ruleForm.spiritualGrowth"></el-input-number>
@@ -182,6 +182,7 @@ export default {
         isGroup: 0,
         isChurch: 0,
         isLD: 0,
+        isTD: 0,
         isCourse: 0,
         groupDate: '',
         spiritualGrowth: 0,

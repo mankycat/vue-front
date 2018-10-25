@@ -12,9 +12,9 @@
       <el-menu-item @click="logOut" index="/">退出</el-menu-item>
     </el-menu>
   </el-aside>
-  <el-container >
-        <el-header class="home-header"><div @click="handleCollapse" class="menu-icon"><i class="el-icon-menu"></i></div>A'men</el-header>
-          <div style="height: 100%" @click="checkCollapse">
+  <el-container>
+        <el-header class="home-header" ><div @click.prevent="handleCollapse" class="menu-icon"><i class="el-icon-menu"></i></div>A'men</el-header>
+          <div @click.prevent="checkCollapse" style="height: 100%">
             <router-view></router-view>
           </div>
         <!--<el-footer>Copyright ©2018 v1.0.0</el-footer>-->
