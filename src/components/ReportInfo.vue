@@ -43,15 +43,15 @@
       </div>
         <div v-if="stepStatus===1">
         <el-form-item label="主日正常" prop="isSunday">
-          <el-switch v-model="ruleForm.isSunday"></el-switch>
+          <el-switch width=60 v-model="ruleForm.isSunday"></el-switch>
         </el-form-item>
         <el-form-item label="小组正常" prop="isParty">
-          <el-switch v-model="ruleForm.isParty"></el-switch>
+          <el-switch width=60 v-model="ruleForm.isParty"></el-switch>
         </el-form-item>
         <el-form-item v-if="ruleForm.isParty" label="小组日期" required>
           <el-col>
             <el-form-item prop="groupDate">
-              <el-date-picker v-if="isEdit" type="date" placeholder="选择日期" v-model="ruleForm.groupDate" style="width: 80%;"></el-date-picker>
+              <el-date-picker editable="false" clearable="false" v-if="isEdit" type="date" placeholder="选择日期" v-model="ruleForm.groupDate" style="width: 80%;"></el-date-picker>
               <div v-else style="text-align: left"><span>:   {{ruleForm.groupDate | formatDate}}</span></div>
             </el-form-item>
           </el-col>
@@ -264,7 +264,8 @@ export default {
     nextStep () {
       if (this.step < (this.memberData.length - 1)) {
         let attendanceData = {}
-        attendanceData.ID = null
+        attendanceData.ID = ''
+        attendanceData.WeekReportID = ''
         attendanceData.UserID = this.currentMember.userid
         attendanceData.IsGroup = this.ruleForm.isGroup
         attendanceData.IsChurch = this.ruleForm.isChurch
@@ -285,7 +286,14 @@ export default {
       this.resetFormMemberValue()
     },
     submitReport () {
-      console.log('')
+      let attendanceO = {
+        '?xml version="1.0" encoding="utf-8"?': null,
+        list: {
+          Attendance: this.attendanceObj
+        }
+      }
+
+      console.log(this.$otxConverter(attendanceO))
     },
     getCurrentTime () {
       var nowTime = new Date()
