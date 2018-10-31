@@ -52,7 +52,7 @@
           <el-col>
             <el-form-item prop="groupDate">
               <el-date-picker editable="false" clearable="false" v-if="isEdit" type="date" placeholder="选择日期" v-model="ruleForm.groupDate" style="width: 80%;"></el-date-picker>
-              <div v-else style="text-align: left"><span>:   {{ruleForm.groupDate | formatDate}}</span></div>
+              <!--<div v-else style="text-align: left"><span>:   {{ruleForm.groupDate | formatDate}}</span></div>-->
             </el-form-item>
           </el-col>
         </el-form-item>
@@ -286,14 +286,45 @@ export default {
       this.resetFormMemberValue()
     },
     submitReport () {
+      let weekReportO = {
+        '?xml version="1.0" encoding="utf-8"?': null,
+        WeekReport: {
+          ID: '',
+          ReportName: this.currentTeam + '-' + this.dateToString(this.ruleForm.groupDate),
+          WeekReportDate: this.dateToString(this.ruleForm.groupDate),
+          OrganizationID: this.currentTeam,
+          CreateUserID: this.currentUser.userid,
+          IsParty: this.ruleForm.isParty,
+          IsSunday: this.ruleForm.isSunday,
+          Description: this.ruleForm.description
+        }
+      }
       let attendanceO = {
         '?xml version="1.0" encoding="utf-8"?': null,
         list: {
           Attendance: this.attendanceObj
         }
       }
+      this.FiveWObj = []
+      this.FiveWObj.push({
+        ID: '', WeekReportID: '', Flow: '祷告', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.prayTime, LeaderID: this.ruleForm.prayer}, {
+        ID: '', WeekReportID: '', Flow: '破冰', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.iceBreakTime, LeaderID: this.ruleForm.iceBreaker}, {
+        ID: '', WeekReportID: '', Flow: '敬拜', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.singTime, LeaderID: this.ruleForm.singer}, {
+        ID: '', WeekReportID: '', Flow: '见证', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.witnessTime, LeaderID: this.ruleForm.witnesser}, {
+        ID: '', WeekReportID: '', Flow: '话语', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.speakTime, LeaderID: this.ruleForm.speaker}, {
+        ID: '', WeekReportID: '', Flow: '服事', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.serveTime, LeaderID: this.ruleForm.server}, {
+        ID: '', WeekReportID: '', Flow: '报告', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.reportTime, LeaderID: this.ruleForm.reporter})
 
+      let fiveWeekO = {
+        '?xml version="1.0" encoding="utf-8"?': null,
+        list: {
+          GroupFiveW: this.FiveWObj
+        }
+      }
+
+      console.log(this.$otxConverter(weekReportO))
       console.log(this.$otxConverter(attendanceO))
+      console.log(this.$otxConverter(fiveWeekO))
     },
     getCurrentTime () {
       var nowTime = new Date()
@@ -317,6 +348,12 @@ export default {
   computed: {
     memberData () {
       return this.$store.state.members
+    },
+    currentTeam () { // 這邊應該換成讀取從list來的 小組參數
+      return this.$store.state.cTeam
+    },
+    currentUser () {
+      return this.$store.state.user
     }
   },
   mounted: function () {

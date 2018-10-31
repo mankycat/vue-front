@@ -1,8 +1,12 @@
 import Vue from 'vue'
 Vue.filter('formatDate', formatDate)
+Vue.filter('formatDateTime', formatDateTime)
+Vue.filter('dateToString', dateToString)
 Vue.prototype.formatDate = formatDate
+Vue.prototype.formatDateTime = formatDateTime
+Vue.prototype.dateToString = dateToString
 function formatDate (value) {
-  if (value === undefined) {
+  if (value === undefined || value === '') {
     return
   }
   var date = strToDate(value)
@@ -26,8 +30,8 @@ function strToDate (value) {
   return new Date(value)
 }
 
-Vue.filter('formatDateTime', function formatDateTime (value) {
-  if (value === undefined) {
+function formatDateTime (value) {
+  if (value === undefined || value === '') {
     return
   }
   var date = strToDate(value)
@@ -43,4 +47,17 @@ Vue.filter('formatDateTime', function formatDateTime (value) {
     day = '0' + day
   }
   return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes
-})
+}
+
+function dateToString (value) {
+  if (value === undefined || value === '') {
+    return
+  }
+  var mm = value.getMonth() + 1 // getMonth() is zero-based
+  var dd = value.getDate()
+
+  return [value.getFullYear(),
+    (mm > 9 ? '' : '0') + mm,
+    (dd > 9 ? '' : '0') + dd
+  ].join('-')
+}
