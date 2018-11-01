@@ -173,6 +173,8 @@ export default {
     return {
       currentMember: '',
       isEdit: true,
+      joinGroupNum: 0,
+      joinChurchNum: 0,
       step: 0,
       stepStatus: 0, // 0 = 組員 , 1 = 活動 , 2 = 5week
       attendanceObj: [],
@@ -286,6 +288,7 @@ export default {
       this.resetFormMemberValue()
     },
     submitReport () {
+      let _this = this
       let weekReportO = {
         '?xml version="1.0" encoding="utf-8"?': null,
         WeekReport: {
@@ -305,15 +308,26 @@ export default {
           Attendance: this.attendanceObj
         }
       }
+
+      this.attendanceObj.forEach(function (value) {
+        if (value.IsGroup) {
+          _this.joinGroupNum++
+        }
+
+        if (value.IsChurch) {
+          _this.joinChurchNum++
+        }
+      })
+
       this.FiveWObj = []
       this.FiveWObj.push({
-        ID: '', WeekReportID: '', Flow: '祷告', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.prayTime, LeaderID: this.ruleForm.prayer}, {
-        ID: '', WeekReportID: '', Flow: '破冰', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.iceBreakTime, LeaderID: this.ruleForm.iceBreaker}, {
-        ID: '', WeekReportID: '', Flow: '敬拜', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.singTime, LeaderID: this.ruleForm.singer}, {
-        ID: '', WeekReportID: '', Flow: '见证', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.witnessTime, LeaderID: this.ruleForm.witnesser}, {
-        ID: '', WeekReportID: '', Flow: '话语', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.speakTime, LeaderID: this.ruleForm.speaker}, {
-        ID: '', WeekReportID: '', Flow: '服事', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.serveTime, LeaderID: this.ruleForm.server}, {
-        ID: '', WeekReportID: '', Flow: '报告', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.reportTime, LeaderID: this.ruleForm.reporter})
+        ID: '', WeekReportID: '', Flow: '祷告', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.prayTime, LeaderID: this.ruleForm.prayer, GroupDate: this.dateToString(this.ruleForm.groupDate), GroupContent: this.ruleForm.groupContent, ContentDetails: this.ruleForm.contentDetails, IntrospectionNum: this.ruleForm.introspectionNum, JoinGroupNum: this.joinGroupNum, JoinChurchNum: this.joinChurchNum, Opinion: ''}, {
+        ID: '', WeekReportID: '', Flow: '破冰', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.iceBreakTime, LeaderID: this.ruleForm.iceBreaker, GroupDate: this.dateToString(this.ruleForm.groupDate), GroupContent: this.ruleForm.groupContent, ContentDetails: this.ruleForm.contentDetails, IntrospectionNum: this.ruleForm.introspectionNum, JoinGroupNum: this.joinGroupNum, JoinChurchNum: this.joinChurchNum, Opinion: ''}, {
+        ID: '', WeekReportID: '', Flow: '敬拜', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.singTime, LeaderID: this.ruleForm.singer, GroupDate: this.dateToString(this.ruleForm.groupDate), GroupContent: this.ruleForm.groupContent, ContentDetails: this.ruleForm.contentDetails, IntrospectionNum: this.ruleForm.introspectionNum, JoinGroupNum: this.joinGroupNum, JoinChurchNum: this.joinChurchNum, Opinion: ''}, {
+        ID: '', WeekReportID: '', Flow: '见证', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.witnessTime, LeaderID: this.ruleForm.witnesser, GroupDate: this.dateToString(this.ruleForm.groupDate), GroupContent: this.ruleForm.groupContent, ContentDetails: this.ruleForm.contentDetails, IntrospectionNum: this.ruleForm.introspectionNum, JoinGroupNum: this.joinGroupNum, JoinChurchNum: this.joinChurchNum, Opinion: ''}, {
+        ID: '', WeekReportID: '', Flow: '话语', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.speakTime, LeaderID: this.ruleForm.speaker, GroupDate: this.dateToString(this.ruleForm.groupDate), GroupContent: this.ruleForm.groupContent, ContentDetails: this.ruleForm.contentDetails, IntrospectionNum: this.ruleForm.introspectionNum, JoinGroupNum: this.joinGroupNum, JoinChurchNum: this.joinChurchNum, Opinion: ''}, {
+        ID: '', WeekReportID: '', Flow: '服事', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.serveTime, LeaderID: this.ruleForm.server, GroupDate: this.dateToString(this.ruleForm.groupDate), GroupContent: this.ruleForm.groupContent, ContentDetails: this.ruleForm.contentDetails, IntrospectionNum: this.ruleForm.introspectionNum, JoinGroupNum: this.joinGroupNum, JoinChurchNum: this.joinChurchNum, Opinion: ''}, {
+        ID: '', WeekReportID: '', Flow: '报告', BeginTime: this.ruleForm.beginTime, EndTime: this.ruleForm.reportTime, LeaderID: this.ruleForm.reporter, GroupDate: this.dateToString(this.ruleForm.groupDate), GroupContent: this.ruleForm.groupContent, ContentDetails: this.ruleForm.contentDetails, IntrospectionNum: this.ruleForm.introspectionNum, JoinGroupNum: this.joinGroupNum, JoinChurchNum: this.joinChurchNum, Opinion: ''})
 
       let fiveWeekO = {
         '?xml version="1.0" encoding="utf-8"?': null,
