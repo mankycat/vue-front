@@ -5,7 +5,7 @@
     @row-click="rowClick"
     style="width: 100%">
     <el-table-column
-      prop="reportname"
+      prop="StringID"
       min-width="120"
       label="">
     </el-table-column>
@@ -15,20 +15,18 @@
 <script>
 export default {
   name: 'ReportList',
-  data () {
-    return {
-      tableData: [{
-        reportname: 'aaa-20180622'
-      }, {
-        reportname: 'bbb-20180622'
-      }]
-    }
-  },
   methods: {
     rowClick: function (row, event, column) {
-      console.log(row.reportname)
-      this.$router.push({name: 'ReportInfo'})
+      console.log(row.StringID)
+      this.$router.push({name: 'ReportInfo', params: {reportName: row.StringID}})
     }
+  },
+  computed: {
+    tableData () {
+      return this.$store.state.reports
+    }
+  },
+  mounted: function () {
   }
 }
 </script>

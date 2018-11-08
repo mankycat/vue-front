@@ -9,7 +9,7 @@ import Mint from 'mint-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import {getRequest, postRequest, deleteRequest, putRequest} from './utils/api'
 import './utils/filter_utils'
-import {initMemberList} from './utils/utils'
+import {initMemberList, initReportList} from './utils/utils'
 import {mapState} from 'vuex'
 import xmlToJson from 'xml-to-json-promise'
 import objToXml from 'object-to-xml'
@@ -24,6 +24,7 @@ Vue.prototype.postRequest = postRequest
 Vue.prototype.deleteRequest = deleteRequest
 Vue.prototype.putRequest = putRequest
 Vue.prototype.initMemberList = initMemberList
+Vue.prototype.initReportList = initReportList
 Vue.prototype.$xtjConverter = xmlToJson
 Vue.prototype.$otxConverter = objToXml
 
