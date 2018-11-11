@@ -5,7 +5,7 @@
     @row-click="rowClick"
     style="width: 100%">
     <el-table-column
-      prop="reportname"
+      prop="ReportName"
       min-width="120"
       label="">
     </el-table-column>
@@ -15,19 +15,27 @@
 <script>
 export default {
   name: 'ReportListModify',
-  data () {
-    return {
-      tableData: [{
-        reportname: 'ccc-20180622'
-      }, {
-        reportname: 'ddd-20180622'
-      }]
-    }
-  },
   methods: {
     rowClick: function (row, event, column) {
-      console.log(row.reportname)
+      console.log(row.ReportName)
+      this.$router.push({name: 'ReportInfo',
+        params: {isEdit: true,
+          reportName: row.ReportName,
+          reportId: row.ID,
+          isParty: row.IsParty,
+          isSunday: row.IsSunday,
+          reportDate: row.WeekReportDate,
+          createUserId: row.CreateUserID
+        }})
     }
+  },
+  computed: {
+    tableData () {
+      return this.$store.state.reportedit
+    }
+  },
+  mounted: function () {
+    console.log('reportlist modify')
   }
 }
 </script>

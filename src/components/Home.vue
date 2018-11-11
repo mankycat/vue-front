@@ -54,6 +54,7 @@ export default {
   mounted: function () {
     this.initMemberList(this.$store)
     this.initReportList(this.$store.state.user.groupid, this.$store)
+    this.initReportListEdit(this.$store.state.user.groupid, this.$store)
   }
 }
 </script>

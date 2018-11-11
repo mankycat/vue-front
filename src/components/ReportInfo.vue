@@ -2,7 +2,7 @@
   <el-container>
     <el-main style="padding: 10px">
       <div v-if="stepStatus===0"><span>{{currentMember.username}}</span><span v-if="currentMember.nickname"> ({{currentMember.nickname}})</span><span>活动纪录</span></div>
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
+      <el-form :model="ruleForm" ref="ruleForm" label-width="80px" class="demo-ruleForm">
         <div v-if="stepStatus===0">
         <el-form-item label="小組" prop="isGroup">
           <!--<el-input v-if="isEdit" v-model="ruleForm.loginname"></el-input>-->
@@ -54,7 +54,7 @@
         <el-form-item v-if="ruleForm.isParty" label="小组日期" required>
           <el-col>
             <el-form-item prop="groupDate">
-              <el-date-picker editable="false" clearable="false" v-if="isEdit" type="date" placeholder="选择日期" v-model="ruleForm.groupDate" style="width: 80%;"></el-date-picker>
+              <el-date-picker editable="false" clearable="false" type="date" placeholder="选择日期" v-model="ruleForm.groupDate" style="width: 80%;"></el-date-picker>
               <!--<div v-else style="text-align: left"><span>:   {{ruleForm.groupDate | formatDate}}</span></div>-->
             </el-form-item>
           </el-col>
@@ -74,7 +74,7 @@
         <el-form-item v-if="ruleForm.isParty" prop="introspectionNum" label="检讨人数">
           <el-input-number v-model="ruleForm.introspectionNum"></el-input-number>
         </el-form-item>
-        <el-form-item v-if="ruleForm.description" prop="contentDetails" label="备注说明">
+        <el-form-item v-if="ruleForm.isParty" prop="contentDetails" label="备注说明">
           <el-input v-model="ruleForm.description" placeholder="请输入内容"></el-input>
         </el-form-item>
         </div>
@@ -175,8 +175,9 @@ export default {
   data () {
     return {
       currentMember: '',
-      isEdit: true,
+      isEdit: false,
       reportName: '',
+      reportId: '',
       joinGroupNum: 0,
       joinChurchNum: 0,
       step: 0,
@@ -269,7 +270,8 @@ export default {
       }
     },
     nextStep () {
-      if (this.step < (this.memberData.length - 1)) {
+      console.log(this.ruleForm.isParty + '|' + this.ruleForm.isSunday)
+      if (this.step <= (this.memberData.length - 1)) {
         let attendanceData = {}
         attendanceData.ID = ''
         attendanceData.WeekReportID = ''
@@ -283,6 +285,7 @@ export default {
         attendanceData.PhoneCare = this.ruleForm.phoneCare
         attendanceData.ByVisiting = this.ruleForm.byVisiting
         this.attendanceObj[this.step] = attendanceData
+        console.log(attendanceData)
       }
       this.step++
       if (this.step > (this.memberData.length - 1)) {
@@ -377,7 +380,16 @@ export default {
   },
   mounted: function () {
     this.currentMember = this.memberData[0]
+    this.resetFormMemberValue()
     this.reportName = this.$route.params.reportName
+    if (this.$route.params.isEdit) {
+      console.log('isEdit')
+      this.isEdit = true
+      this.reportId = this.$route.params.reportId
+      this.ruleForm.isParty = this.$route.params.isParty
+      this.ruleForm.isSunday = this.$route.params.isSunday
+      this.ruleForm.groupDate = this.$route.params.reportDate
+    }
   }
 }
 </script>

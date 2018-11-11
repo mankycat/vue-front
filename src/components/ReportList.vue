@@ -18,7 +18,8 @@ export default {
   methods: {
     rowClick: function (row, event, column) {
       console.log(row.StringID)
-      this.$router.push({name: 'ReportInfo', params: {reportName: row.StringID}})
+      this.$router.push({name: 'ReportInfo',
+        params: {reportName: row.StringID, isEdit: false}})
     }
   },
   computed: {

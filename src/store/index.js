@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     rolename: window.localStorage.getItem('rolename') == null ? undefined : JSON.parse(window.localStorage.getItem('rolename')),
     areas: window.localStorage.getItem('areas') == null ? undefined : JSON.parse(window.localStorage.getItem('areas')),
     teams: window.localStorage.getItem('teams') == null ? undefined : JSON.parse(window.localStorage.getItem('teams')),
-    reports: undefined
+    reports: undefined,
+    reportedit: undefined
   },
   mutations: {
     login (state, payload) {
@@ -30,13 +31,17 @@ const store = new Vuex.Store({
       state.teams = undefined
       state.cTeam = ''
       state.cArea = ''
-      state.reports = ''
+      state.reports = undefined
+      state.reportedit = undefined
     },
     initMemberList (state, payload) {
       state.members = payload
     },
     initReportList (state, payload) {
       state.reports = payload
+    },
+    initReportListEdit (state, payload) {
+      state.reportedit = payload
     },
     initAreas (state, payload) {
       state.areas = payload
