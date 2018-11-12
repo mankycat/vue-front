@@ -22,7 +22,12 @@ export const initReportList = (groupId, store) => {
   // postRequest('http://192.168.1.102:8080/WebServiceReport.asmx/SelectNOWeekReport', {
   //   GroupId: groupId
   // }).then(resp => {
-  //   console.log(resp)
+  //   if (resp && resp.status === 200) {
+  //     xmlToJson.xmlDataToJSON(resp.data).then(json => {
+  //       store.commit('initReportList', JSON.parse(json.string._))
+  //     })
+  //     console.log(resp.data)
+  //   }
   // })
 }
 
@@ -33,9 +38,15 @@ export const initReportListEdit = (groupId, store) => {
     store.commit('initReportListEdit', JSON.parse(json.string._))
   })
   // postRequest('http://192.168.1.102:8080/WebServiceReport.asmx/SelectWeekReportByMonth', {
-  //   GroupId: groupId
+  //   OrganizationID: groupId
   // }).then(resp => {
-  //   console.log(resp)
+  //   if (resp && resp.status === 200) {
+  //     xmlToJson.xmlDataToJSON(resp.data).then(json => {
+  //       store.commit('initReportListEdit', JSON.parse(json.string._))
+  //     })
+  //     console.log(resp.data)
+  //   }
+  //   console.log(resp.data)
   // })
 }
 
