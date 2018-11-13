@@ -84,6 +84,7 @@ export default {
       })
     },
     changeTeam: function () {
+      let _this = this
       this.postRequest('/user/getMembers',
         {
           gId: this.cTeam
@@ -91,6 +92,8 @@ export default {
         if (resp && resp.status === 200 && resp.data.status === 'success') {
           console.log('.....123')
           this.$store.commit('initMemberList', resp.data.data)
+          this.initReportList(_this.cTeam, this.$store)
+          this.initReportListEdit(_this.cTeam, this.$store)
         }
       })
     }
