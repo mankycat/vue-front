@@ -347,6 +347,18 @@ export default {
       console.log(this.$otxConverter(weekReportO))
       console.log(this.$otxConverter(attendanceO))
       console.log(this.$otxConverter(fiveWeekO))
+
+      if (!this.isEdit) {
+        this.postRequest(this.$config.API_URL + '/WebServiceReport.asmx/SaveNewWeekReport', {
+          WeekReportXML: this.$otxConverter(weekReportO),
+          AttendanceXML: this.$otxConverter(attendanceO),
+          FiveWXML: this.$otxConverter(fiveWeekO)
+        }).then(resp => {
+          if (resp && resp.status === 200) {
+            console.log(resp)
+          }
+        })
+      }
     },
     getCurrentTime () {
       var nowTime = new Date()
