@@ -49,7 +49,7 @@ export default {
         _this.loading = false
         if (resp && resp.status === 200) {
           var data = resp.data
-          console.log(data.msg)
+          // console.log(data.msg)
           _this.$store.commit('login', data.msg)
           _this.$router.replace({path: '/'})
         } else {

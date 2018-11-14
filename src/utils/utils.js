@@ -27,7 +27,6 @@ export const initReportList = (groupId, store) => {
       xmlToJson.xmlDataToJSON(resp.data).then(json => {
         store.commit('initReportList', JSON.parse(json.string._))
       })
-      console.log(resp.data)
     }
   })
 }
@@ -45,9 +44,7 @@ export const initReportListEdit = (groupId, store) => {
       xmlToJson.xmlDataToJSON(resp.data).then(json => {
         store.commit('initReportListEdit', JSON.parse(json.string._))
       })
-      console.log(resp.data)
     }
-    console.log(resp.data)
   })
 }
 

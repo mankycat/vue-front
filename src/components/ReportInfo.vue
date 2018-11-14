@@ -285,7 +285,7 @@ export default {
         attendanceData.PhoneCare = this.ruleForm.phoneCare
         attendanceData.ByVisiting = this.ruleForm.byVisiting
         this.attendanceObj[this.step] = attendanceData
-        console.log(attendanceData)
+        // console.log(attendanceData)
       }
       this.step++
       if (this.step > (this.memberData.length - 1)) {
@@ -343,10 +343,10 @@ export default {
           GroupFiveW: this.FiveWObj
         }
       }
-
-      console.log(this.$otxConverter(weekReportO))
-      console.log(this.$otxConverter(attendanceO))
-      console.log(this.$otxConverter(fiveWeekO))
+      //
+      // console.log(this.$otxConverter(weekReportO))
+      // console.log(this.$otxConverter(attendanceO))
+      // console.log(this.$otxConverter(fiveWeekO))
 
       if (!this.isEdit) {
         this.postRequest(this.$config.API_URL + '/WebServiceReport.asmx/SaveNewWeekReport', {
@@ -355,7 +355,7 @@ export default {
           FiveWXML: this.$otxConverter(fiveWeekO)
         }).then(resp => {
           if (resp && resp.status === 200) {
-            console.log(resp)
+            // console.log(resp)
           }
         })
       }
@@ -395,7 +395,7 @@ export default {
     this.resetFormMemberValue()
     this.reportName = this.$route.params.reportName
     if (this.$route.params.isEdit) {
-      console.log('isEdit')
+      // console.log('isEdit')
       this.isEdit = true
       this.reportId = this.$route.params.reportId
       this.ruleForm.isParty = this.$route.params.isParty
