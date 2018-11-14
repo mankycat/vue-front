@@ -1,6 +1,7 @@
 import {getRequest, postRequest} from './api'
 import {Message} from 'element-ui'
 import xmlToJson from 'xml-to-json-promise'
+import {CONFIG as config} from '../config'
 
 export const isNotNullORBlank = (...args) => {
   for (var i = 0; i < args.length; i++) {
@@ -19,7 +20,7 @@ export const initReportList = (groupId, store) => {
   // xmlToJson.xmlDataToJSON(datas).then(json => {
   //   store.commit('initReportList', JSON.parse(json.string._))
   // })
-  postRequest('http://192.168.1.102:8080/WebServiceReport.asmx/SelectNOWeekReport', {
+  postRequest(config.API_URL + '/WebServiceReport.asmx/SelectNOWeekReport', {
     GroupId: groupId
   }).then(resp => {
     if (resp && resp.status === 200) {
@@ -37,7 +38,7 @@ export const initReportListEdit = (groupId, store) => {
   // xmlToJson.xmlDataToJSON(datas).then(json => {
   //   store.commit('initReportListEdit', JSON.parse(json.string._))
   // })
-  postRequest('http://192.168.1.102:8080/WebServiceReport.asmx/SelectWeekReportByMonth', {
+  postRequest(config.API_URL + '/WebServiceReport.asmx/SelectWeekReportByMonth', {
     OrganizationID: groupId
   }).then(resp => {
     if (resp && resp.status === 200) {

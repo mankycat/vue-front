@@ -13,6 +13,7 @@ import {initMemberList, initReportList, initReportListEdit} from './utils/utils'
 import {mapState} from 'vuex'
 import xmlToJson from 'xml-to-json-promise'
 import objToXml from 'object-to-xml'
+import {CONFIG} from './config'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
@@ -28,6 +29,7 @@ Vue.prototype.initReportList = initReportList
 Vue.prototype.initReportListEdit = initReportListEdit
 Vue.prototype.$xtjConverter = xmlToJson
 Vue.prototype.$otxConverter = objToXml
+Vue.prototype.$config = CONFIG
 
 /* eslint-disable no-new */
 router.beforeEach((to, from, next) => {
